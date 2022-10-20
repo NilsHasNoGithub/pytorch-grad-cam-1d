@@ -9,6 +9,7 @@ class XGradCAM(BaseCAM):
             target_layers,
             use_cuda=False,
             reshape_transform=None):
+        raise NotImplementedError("Not adapted for 1d")
         super(
             XGradCAM,
             self).__init__(

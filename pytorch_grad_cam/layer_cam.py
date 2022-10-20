@@ -12,6 +12,7 @@ class LayerCAM(BaseCAM):
             target_layers,
             use_cuda=False,
             reshape_transform=None):
+        raise NotImplementedError("Not adapted for 1d")
         super(
             LayerCAM,
             self).__init__(

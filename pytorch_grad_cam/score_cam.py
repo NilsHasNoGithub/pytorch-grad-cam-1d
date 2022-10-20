@@ -10,6 +10,7 @@ class ScoreCAM(BaseCAM):
             target_layers,
             use_cuda=False,
             reshape_transform=None):
+        raise NotImplementedError("Not adapted for 1d")
         super(ScoreCAM, self).__init__(model,
                                        target_layers,
                                        use_cuda,

@@ -1,0 +1,15 @@
+name: pytorch_grad_cam_1d
+channels:
+  - base
+  - conda-forge
+  - pytorch
+dependencies:
+  - pytorch
+  - torchvision
+  - numpy
+  - pip
+  - opencv
+  - pillow
+  - ttach
+  - matplotlib
+  - scikit-learn

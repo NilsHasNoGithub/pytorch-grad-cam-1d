@@ -11,6 +11,7 @@ from pytorch_grad_cam.utils.image import scale_accross_batch_and_channels, scale
 class FullGrad(BaseCAM):
     def __init__(self, model, target_layers, use_cuda=False,
                  reshape_transform=None):
+        raise NotImplementedError("Not adapted for 1d")
         if len(target_layers) > 0:
             print(
                 "Warning: target_layers is ignored in FullGrad. All bias layers will be used instead")
