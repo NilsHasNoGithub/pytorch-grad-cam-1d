@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 import torch
 from torchvision.transforms import Compose, Normalize, ToTensor
-from typing import List, Dict
+from typing import List, Dict, Sequence
 import math
 
 
@@ -156,6 +156,11 @@ def show_factorization_on_image(img: np.ndarray,
         result = np.hstack((result, data))
     return result
 
+def resample_to_length(x: Sequence[float], target_len: int) -> np.ndarray:
+    to_eval = np.linspace(0, 1, target_len)
+    original = np.linspace(0, 1, len(x))
+
+    return np.interp(to_eval, original, x)
 
 def scale_cam_image(cam, target_size=None):
     # image is now 1d
@@ -164,7 +169,8 @@ def scale_cam_image(cam, target_size=None):
         img = img - np.min(img)
         img = img / (1e-7 + np.max(img))
         if target_size is not None:
-            img = cv2.resize(img.reshape(*img.shape, -1), target_size, 1).squeeze()
+            # img = cv2.resize(img.reshape(*img.shape, -1), target_size, 1).squeeze()
+            img = resample_to_length(img, target_len=target_size)
         result.append(img)
     result = np.float32(result)
 
