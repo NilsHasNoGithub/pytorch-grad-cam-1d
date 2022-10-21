@@ -5,7 +5,6 @@ from pytorch_grad_cam_1d.base_cam import BaseCAM
 class GradCAM(BaseCAM):
     def __init__(self, model, target_layers, use_cuda=False,
                  reshape_transform=None):
-        raise NotImplementedError("Not adapted for 1d")
         super(
             GradCAM,
             self).__init__(
