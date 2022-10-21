@@ -1,6 +1,6 @@
 import numpy as np
 from pytorch_grad_cam.base_cam import BaseCAM
-from pytorch_grad_cam.utils.svd_on_activations import get_2d_projection
+from pytorch_grad_cam.utils.svd_on_activations import get_projection
 
 # https://ieeexplore.ieee.org/document/9462463
 
@@ -31,7 +31,7 @@ class LayerCAM(BaseCAM):
         spatial_weighted_activations = np.maximum(grads, 0) * activations
 
         if eigen_smooth:
-            cam = get_2d_projection(spatial_weighted_activations)
+            cam = get_projection(spatial_weighted_activations)
         else:
             cam = spatial_weighted_activations.sum(axis=1)
         return cam

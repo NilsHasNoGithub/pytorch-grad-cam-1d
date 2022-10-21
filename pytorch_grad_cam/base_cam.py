@@ -3,7 +3,7 @@ import torch
 import ttach as tta
 from typing import Callable, List, Tuple
 from pytorch_grad_cam.activations_and_gradients import ActivationsAndGradients
-from pytorch_grad_cam.utils.svd_on_activations import get_2d_projection
+from pytorch_grad_cam.utils.svd_on_activations import get_projection
 from pytorch_grad_cam.utils.image import scale_cam_image
 from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
 
@@ -52,9 +52,9 @@ class BaseCAM:
                                        targets,
                                        activations,
                                        grads)
-        weighted_activations = weights[:, :, None, None] * activations
+        weighted_activations = weights[:, :, None] * activations
         if eigen_smooth:
-            cam = get_2d_projection(weighted_activations)
+            cam = get_projection(weighted_activations)
         else:
             cam = weighted_activations.sum(axis=1)
         return cam
@@ -97,10 +97,10 @@ class BaseCAM:
                                                    eigen_smooth)
         return self.aggregate_multi_layers(cam_per_layer)
 
-    def get_target_width_height(self,
-                                input_tensor: torch.Tensor) -> Tuple[int, int]:
-        width, height = input_tensor.size(-1), input_tensor.size(-2)
-        return width, height
+    def get_target_size(self,
+                                input_tensor: torch.Tensor) -> int:
+        sz = input_tensor.size(-1)
+        return sz
 
     def compute_cam_per_layer(
             self,
@@ -111,7 +111,7 @@ class BaseCAM:
                             for a in self.activations_and_grads.activations]
         grads_list = [g.cpu().data.numpy()
                       for g in self.activations_and_grads.gradients]
-        target_size = self.get_target_width_height(input_tensor)
+        target_size = self.get_target_size(input_tensor)
 
         cam_per_target_layer = []
         # Loop over the saliency image from every layer
@@ -132,7 +132,7 @@ class BaseCAM:
                                      eigen_smooth)
             cam = np.maximum(cam, 0)
             scaled = scale_cam_image(cam, target_size)
-            cam_per_target_layer.append(scaled[:, None, :])
+            cam_per_target_layer.append(scaled[:, None, ...])
 
         return cam_per_target_layer
 
@@ -179,6 +179,9 @@ class BaseCAM:
                  targets: List[torch.nn.Module] = None,
                  aug_smooth: bool = False,
                  eigen_smooth: bool = False) -> np.ndarray:
+
+        if aug_smooth:
+            raise NotImplementedError("Not implemented for 1D")
 
         # Smooth the CAM result with test time augmentation
         if aug_smooth is True:

@@ -2,7 +2,7 @@ import numpy as np
 import torch
 from pytorch_grad_cam.base_cam import BaseCAM
 from pytorch_grad_cam.utils.find_layers import find_layer_predicate_recursive
-from pytorch_grad_cam.utils.svd_on_activations import get_2d_projection
+from pytorch_grad_cam.utils.svd_on_activations import get_projection
 from pytorch_grad_cam.utils.image import scale_accross_batch_and_channels, scale_cam_image
 
 # https://arxiv.org/abs/1905.00780
@@ -53,7 +53,7 @@ class FullGrad(BaseCAM):
         grads_list = [g.cpu().data.numpy() for g in
                       self.activations_and_grads.gradients]
         cam_per_target_layer = []
-        target_size = self.get_target_width_height(input_tensor)
+        target_size = self.get_target_size(input_tensor)
 
         gradient_multiplied_input = input_grad * input_tensor.data.cpu().numpy()
         gradient_multiplied_input = np.abs(gradient_multiplied_input)
@@ -80,7 +80,7 @@ class FullGrad(BaseCAM):
             # and then consumes a lot of memory
             cam_per_target_layer = scale_accross_batch_and_channels(
                 cam_per_target_layer, (target_size[0] // 8, target_size[1] // 8))
-            cam_per_target_layer = get_2d_projection(cam_per_target_layer)
+            cam_per_target_layer = get_projection(cam_per_target_layer)
             cam_per_target_layer = cam_per_target_layer[:, None, :, :]
             cam_per_target_layer = scale_accross_batch_and_channels(
                 cam_per_target_layer,

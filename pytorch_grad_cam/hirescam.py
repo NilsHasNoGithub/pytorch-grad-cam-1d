@@ -1,6 +1,6 @@
 import numpy as np
 from pytorch_grad_cam.base_cam import BaseCAM
-from pytorch_grad_cam.utils.svd_on_activations import get_2d_projection
+from pytorch_grad_cam.utils.svd_on_activations import get_projection
 
 
 class HiResCAM(BaseCAM):
@@ -27,7 +27,7 @@ class HiResCAM(BaseCAM):
         if eigen_smooth:
             print(
                 "Warning: HiResCAM's faithfulness guarantees do not hold if smoothing is applied")
-            cam = get_2d_projection(elementwise_activations)
+            cam = get_projection(elementwise_activations)
         else:
             cam = elementwise_activations.sum(axis=1)
         return cam

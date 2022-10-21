@@ -1,7 +1,7 @@
 import torch
 from collections import OrderedDict
 import numpy as np
-from pytorch_grad_cam.utils.svd_on_activations import get_2d_projection
+from pytorch_grad_cam.utils.svd_on_activations import get_projection
 
 
 class AblationLayer(torch.nn.Module):
@@ -15,7 +15,7 @@ class AblationLayer(torch.nn.Module):
             Areas that are masked out, are probably not interesting anyway.
         """
 
-        projection = get_2d_projection(activations[None, :])[0, :]
+        projection = get_projection(activations[None, :])[0, :]
         projection = np.abs(projection)
         projection = projection - projection.min()
         projection = projection / projection.max()

@@ -1,5 +1,5 @@
 from pytorch_grad_cam.base_cam import BaseCAM
-from pytorch_grad_cam.utils.svd_on_activations import get_2d_projection
+from pytorch_grad_cam.utils.svd_on_activations import get_projection
 
 # Like Eigen CAM: https://arxiv.org/abs/2008.00299
 # But multiply the activations x gradients
@@ -19,4 +19,4 @@ class EigenGradCAM(BaseCAM):
                       activations,
                       grads,
                       eigen_smooth):
-        return get_2d_projection(grads * activations)
+        return get_projection(grads * activations)
