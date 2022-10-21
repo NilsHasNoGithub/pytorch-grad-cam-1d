@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import torch
 import tqdm
-from pytorch_grad_cam.base_cam import BaseCAM
+from pytorch_grad_cam_1d.base_cam import BaseCAM
 
 
 class AblationLayer(torch.nn.Module):

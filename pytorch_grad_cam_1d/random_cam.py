@@ -1,13 +1,13 @@
 import numpy as np
-from pytorch_grad_cam.base_cam import BaseCAM
+from pytorch_grad_cam_1d.base_cam import BaseCAM
 
 
-class GradCAM(BaseCAM):
+class RandomCAM(BaseCAM):
     def __init__(self, model, target_layers, use_cuda=False,
                  reshape_transform=None):
         raise NotImplementedError("Not adapted for 1d")
         super(
-            GradCAM,
+            RandomCAM,
             self).__init__(
             model,
             target_layers,
@@ -20,4 +20,4 @@ class GradCAM(BaseCAM):
                         target_category,
                         activations,
                         grads):
-        return np.mean(grads, axis=(2, 3))
+        return np.random.uniform(-1, 1, size=(grads.shape[0], grads.shape[1]))

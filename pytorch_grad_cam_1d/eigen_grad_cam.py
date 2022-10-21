@@ -1,5 +1,5 @@
-from pytorch_grad_cam.base_cam import BaseCAM
-from pytorch_grad_cam.utils.svd_on_activations import get_projection
+from pytorch_grad_cam_1d.base_cam import BaseCAM
+from pytorch_grad_cam_1d.utils.svd_on_activations import get_projection
 
 # Like Eigen CAM: https://arxiv.org/abs/2008.00299
 # But multiply the activations x gradients

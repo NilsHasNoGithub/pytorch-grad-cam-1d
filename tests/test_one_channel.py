@@ -3,7 +3,7 @@ import torchvision
 import torch
 import cv2
 import numpy as np
-from pytorch_grad_cam import GradCAM, \
+from pytorch_grad_cam_1d import GradCAM, \
     ScoreCAM, \
     GradCAMPlusPlus, \
     AblationCAM, \
@@ -12,10 +12,10 @@ from pytorch_grad_cam import GradCAM, \
     EigenGradCAM, \
     LayerCAM, \
     FullGrad
-from pytorch_grad_cam.utils.image import show_cam_on_image, \
+from pytorch_grad_cam_1d.utils.image import show_cam_on_image, \
     preprocess_image
 
-from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
+from pytorch_grad_cam_1d.utils.model_targets import ClassifierOutputTarget
 
 torch.manual_seed(0)
 
