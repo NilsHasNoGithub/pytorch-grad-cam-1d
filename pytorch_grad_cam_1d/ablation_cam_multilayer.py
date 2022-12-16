@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 import torch
-import tqdm
 from pytorch_grad_cam_1d.base_cam import BaseCAM
 
 
@@ -115,7 +114,7 @@ class AblationCAM(BaseCAM):
             # Iterate over the input batch
             for tensor, category in zip(input_tensor, target_category):
                 batch_tensor = tensor.repeat(BATCH_SIZE, 1, 1, 1)
-                for i in tqdm.tqdm(range(0, number_of_channels, BATCH_SIZE)):
+                for i in range(0, number_of_channels, BATCH_SIZE):
                     self.set_ablation_layer_batch_indices(
                         list(range(i, i + BATCH_SIZE)))
 
