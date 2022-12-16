@@ -24,7 +24,7 @@ class ScoreCAM(BaseCAM):
                         grads):
         with torch.no_grad():
             upsample = torch.nn.Upsample(
-                size=input_tensor.shape[-1:], mode="bilinear")
+                size=input_tensor.shape[-1:], mode="linear")
             activation_tensor = torch.from_numpy(activations)
             if self.cuda:
                 activation_tensor = activation_tensor.cuda()
