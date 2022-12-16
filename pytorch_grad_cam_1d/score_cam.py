@@ -34,7 +34,7 @@ class ScoreCAM(BaseCAM):
             maxs = upsampled.view(upsampled.size(0), -1).max(dim=-1)[0]
             mins = upsampled.view(upsampled.size(0), -1).min(dim=-1)[0]
 
-            maxs, mins = maxs[:, :, None], mins[:, :, None]
+            maxs, mins = maxs[:, None], mins[:, None]
             upsampled = (upsampled - mins) / (maxs - mins)
 
             input_tensors = input_tensor[:, None,
