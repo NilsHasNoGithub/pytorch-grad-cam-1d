@@ -24,24 +24,22 @@ class ScoreCAM(BaseCAM):
                         activations,
                         grads):
         with torch.no_grad():
-            upsample = torch.nn.UpsamplingBilinear2d(
-                size=input_tensor.shape[-2:])
+            upsample = torch.nn.Upsample(
+                size=input_tensor.shape[-1:], mode="bilinear")
             activation_tensor = torch.from_numpy(activations)
             if self.cuda:
                 activation_tensor = activation_tensor.cuda()
 
             upsampled = upsample(activation_tensor)
 
-            maxs = upsampled.view(upsampled.size(0),
-                                  upsampled.size(1), -1).max(dim=-1)[0]
-            mins = upsampled.view(upsampled.size(0),
-                                  upsampled.size(1), -1).min(dim=-1)[0]
+            maxs = upsampled.view(upsampled.size(0), -1).max(dim=-1)[0]
+            mins = upsampled.view(upsampled.size(0), -1).min(dim=-1)[0]
 
-            maxs, mins = maxs[:, :, None, None], mins[:, :, None, None]
+            maxs, mins = maxs[:, :, None], mins[:, :, None]
             upsampled = (upsampled - mins) / (maxs - mins)
 
             input_tensors = input_tensor[:, None,
-                                         :, :] * upsampled[:, :, None, :, :]
+                                         :] * upsampled[:, :, None, :]
 
             if hasattr(self, "batch_size"):
                 BATCH_SIZE = self.batch_size
