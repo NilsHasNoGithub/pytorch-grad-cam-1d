@@ -100,7 +100,7 @@ class AblationCAM(BaseCAM):
             for batch_index, (target, tensor) in enumerate(
                     zip(targets, input_tensor)):
                 new_scores = []
-                batch_tensor = tensor.repeat(self.batch_size, 1, 1, 1)
+                batch_tensor = tensor.repeat(self.batch_size, 1, 1)
 
                 # Check which channels should be ablated. Normally this will be all channels,
                 # But we can also try to speed this up by using a low
