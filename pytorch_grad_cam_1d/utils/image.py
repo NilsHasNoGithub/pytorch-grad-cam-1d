@@ -162,12 +162,14 @@ def resample_to_length(x: Sequence[float], target_len: int) -> np.ndarray:
 
     return np.interp(to_eval, original, x)
 
-def scale_cam_image(cam, target_size=None):
+def scale_cam_image(cam, target_size=None, normalize_img=True):
     # image is now 1d
     result = []
     for img in cam:
-        img = img - np.min(img)
-        img = img / (1e-7 + np.max(img))
+        if normalize_img:
+            img = img - np.min(img)
+            img = img / (1e-7 + np.max(img))
+            
         if target_size is not None:
             # img = cv2.resize(img.reshape(*img.shape, -1), target_size, 1).squeeze()
             img = resample_to_length(img, target_len=target_size)

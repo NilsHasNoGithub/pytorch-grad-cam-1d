@@ -3,7 +3,7 @@ from pytorch_grad_cam_1d.base_cam import BaseCAM
 
 
 class GradCAM(BaseCAM):
-    def __init__(self, model, target_layers, use_cuda=False,
+    def __init__(self, model, target_layers, use_cuda=False, normalize_cam_image=True,
                  reshape_transform=None):
         super(
             GradCAM,
@@ -11,7 +11,8 @@ class GradCAM(BaseCAM):
             model,
             target_layers,
             use_cuda,
-            reshape_transform)
+            reshape_transform,
+            normalize_cam_image=normalize_cam_image)
 
     def get_cam_weights(self,
                         input_tensor,

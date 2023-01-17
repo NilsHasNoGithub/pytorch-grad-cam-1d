@@ -15,7 +15,9 @@ class BaseCAM:
                  use_cuda: bool = False,
                  reshape_transform: Callable = None,
                  compute_input_gradient: bool = False,
-                 uses_gradients: bool = True) -> None:
+                 uses_gradients: bool = True,
+                 normalize_cam_image: bool = True) -> None:
+        self.normalize_cam_image = normalize_cam_image
         self.model = model.eval()
         self.target_layers = target_layers
         self.cuda = use_cuda
@@ -131,7 +133,7 @@ class BaseCAM:
                                      layer_grads,
                                      eigen_smooth)
             cam = np.maximum(cam, 0)
-            scaled = scale_cam_image(cam, target_size)
+            scaled = scale_cam_image(cam, target_size, normalize_img=self.normalize_cam_image)
             cam_per_target_layer.append(scaled[:, None, ...])
 
         return cam_per_target_layer
