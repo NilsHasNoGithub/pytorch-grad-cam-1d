@@ -31,7 +31,8 @@ class AblationCAM(BaseCAM):
                  reshape_transform: Callable = None,
                  ablation_layer: torch.nn.Module = AblationLayer(),
                  batch_size: int = 32,
-                 ratio_channels_to_ablate: float = 1.0) -> None:
+                 ratio_channels_to_ablate: float = 1.0,
+                 apply_softmax: bool = True) -> None:
 
         super(AblationCAM, self).__init__(model,
                                           target_layers,
@@ -41,6 +42,7 @@ class AblationCAM(BaseCAM):
         self.batch_size = batch_size
         self.ablation_layer = ablation_layer
         self.ratio_channels_to_ablate = ratio_channels_to_ablate
+        self.apply_softmax = apply_softmax
 
     def save_activation(self, module, input, output) -> None:
         """ Helper function to save the raw activations from the target layer """

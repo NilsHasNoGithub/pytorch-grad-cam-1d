@@ -8,12 +8,14 @@ class ScoreCAM(BaseCAM):
             model,
             target_layers,
             use_cuda=False,
-            reshape_transform=None):
+            reshape_transform=None,
+            apply_softmax:bool=True):
         super(ScoreCAM, self).__init__(model,
                                        target_layers,
                                        use_cuda,
                                        reshape_transform=reshape_transform,
                                        uses_gradients=False)
+        self.apply_softmax = apply_softmax
 
     def get_cam_weights(self,
                         input_tensor,
@@ -53,5 +55,5 @@ class ScoreCAM(BaseCAM):
                     scores.extend(outputs)
             scores = torch.Tensor(scores)
             scores = scores.view(activations.shape[0], activations.shape[1])
-            weights = torch.nn.Softmax(dim=-1)(scores).numpy()
+            weights = torch.nn.Softmax(dim=-1)(scores).numpy() if self.apply_softmax else scores.numpy()
             return weights
