@@ -55,5 +55,5 @@ class ScoreCAM(BaseCAM):
                     scores.extend(outputs)
             scores = torch.Tensor(scores)
             scores = scores.view(activations.shape[0], activations.shape[1])
-            weights = torch.nn.Softmax(dim=-1)(scores).numpy() if self.apply_softmax else scores.numpy()
+            weights = torch.nn.Softmax(dim=-1)(scores).numpy()
             return weights
