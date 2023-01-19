@@ -9,13 +9,13 @@ class ScoreCAM(BaseCAM):
             target_layers,
             use_cuda=False,
             reshape_transform=None,
-            normalize_cam_image:bool=True):
+            normalize_cam_image:bool=True, **base_cam_kwargs):
         super(ScoreCAM, self).__init__(model,
                                        target_layers,
                                        use_cuda,
                                        reshape_transform=reshape_transform,
                                        uses_gradients=False,
-                                       normalize_cam_image=normalize_cam_image)
+                                       normalize_cam_image=normalize_cam_image, **base_cam_kwargs)
 
     def get_cam_weights(self,
                         input_tensor,

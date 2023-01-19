@@ -32,14 +32,14 @@ class AblationCAM(BaseCAM):
                  ablation_layer: torch.nn.Module = AblationLayer(),
                  batch_size: int = 32,
                  ratio_channels_to_ablate: float = 1.0,
-                 normalize_cam_image: bool = True) -> None:
+                 normalize_cam_image: bool = True, **base_cam_kwargs) -> None:
 
         super(AblationCAM, self).__init__(model,
                                           target_layers,
                                           use_cuda,
                                           reshape_transform,
                                           normalize_cam_image=normalize_cam_image,
-                                          uses_gradients=False)
+                                          uses_gradients=False, **base_cam_kwargs)
         self.batch_size = batch_size
         self.ablation_layer = ablation_layer
         self.ratio_channels_to_ablate = ratio_channels_to_ablate
