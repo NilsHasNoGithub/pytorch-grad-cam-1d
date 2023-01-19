@@ -148,7 +148,7 @@ class BaseCAM:
         if self.do_relu:
             cam_per_target_layer = np.maximum(cam_per_target_layer, 0)
         result = np.mean(cam_per_target_layer, axis=1)
-        return scale_cam_image(result)
+        return scale_cam_image(result, normalize_img=self.normalize_cam_image)
 
     def forward_augmentation_smoothing(self,
                                        input_tensor: torch.Tensor,
