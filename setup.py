@@ -7,16 +7,16 @@ with open("requirements.txt", "r") as f:
     requirements = f.readlines()
 
 setuptools.setup(
-    name='grad-cam',
-    version='1.4.6',
+    name='grad-cam-1d',
+    version='0.1',
     author='Jacob Gildenblat',
     author_email='jacob.gildenblat@gmail.com',
     description='Many Class Activation Map methods implemented in Pytorch for classification, segmentation, object detection and more',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/jacobgil/pytorch-grad-cam',
+    url='https://github.com/NilsHasNoGithub/pytorch-grad-cam-1d',
     project_urls={
-        'Bug Tracker': 'https://github.com/jacobgil/pytorch-grad-cam/issues',
+        'Bug Tracker': 'https://github.com/NilsHasNoGithub/pytorch-grad-cam-1d/issues',
     },
     classifiers=[
         'Programming Language :: Python :: 3',
